@@ -3,7 +3,7 @@
 #include <list>
 #include <stack>
 #include <queue>
-//邻接表链表
+//邻接表链表节点
 struct AdjList
 {
 	AdjList(int v){
@@ -59,7 +59,7 @@ public:
 	//初始化，传入一个g和起始点
 	DepthFirstSearch(Graph &g, int start){
 		marked = new bool[g.getV()];
-		memset(marked, 0, g.getV()-1);
+		memset(marked, 0, g.getV()*sizeof(bool));
 		count = 0;
 		dfs(g, start);
 	}
@@ -111,10 +111,10 @@ public:
 		return marked[w];
 	}
 
-
-	std::stack<AdjList>* pathTo(int v){
+	//返回路径链表
+	std::stack<int>* pathTo(int v){
 		if (!hasPathTo(v))return NULL;
-		std::stack<AdjList> * p = new std::stack<AdjList>;
+		std::stack<int> * p = new std::stack<int>;
 		for (int x = v; x != s; x = edgeTo[x]){
 			p->push(x);
 		}
@@ -130,37 +130,65 @@ private:
 	int *edgeTo;//连接到的边
 	int s;//起点
 
-	void bfs(Graph&g, int node){
+	void bfs(Graph&g, int start){
 		std::queue<int> que;
-		marked[node] = true;
-		que.push(node);
+		marked[start] = true;
+		que.push(start);
 		while (!que.empty())
 		{
-			int v = que.front();
-			que.push();
-			//std::list<AdjList> *p = g.getAdj(node);
-			//此处存疑  这样是否能访问到整个链表有待验证
-			for (std::list<AdjList>::iterator i = g.getAdj(node)->begin(); i != g.getAdj(node)->end(); i++){
-				if (!marked[*i])
+			int v = que.front(); 
+			que.pop();	//获取队列最前面的一个元素后删去
+			//std::cout << v<<std::endl;
+			for (std::list<AdjList>::iterator i = g.getAdj(v)->begin(); i != g.getAdj(v)->end(); i++){
+				//std::cout << i->value<<std::endl;
+				if (!marked[i->value]){
+					edgeTo[i->value] = v;//标记所有相邻的点的来路
+					marked[i->value] = true;//标记所有相邻点的
+					que.push(i->value);//把该点推入队列
+				}
 			}
 		}
 	}
+	
 public:
 	BreadthFirstPaths(Graph&g, int start){
 		s = start;
 		marked = new bool[g.getV()];
 		edgeTo = new int[g.getV()];
-		memset(marked, 0, g.getV() - 1);
-		//memset(marked, 0, g.getV() - 1);
+		memset(marked, 0, g.getV()*sizeof(bool));
 		bfs(g, s);
 	}
+	bool hasPathTo(int v){
+		return marked[v];
+	}
 
+	//返回路径链表
+	std::stack<int>* pathTo(int v){
+		if (!hasPathTo(v))return NULL;
+		std::stack<int> * p = new std::stack<int>;
+		for (int x = v; x != s; x = edgeTo[x]){
+			p->push(x);
+		}
+		p->push(s);
+		return p;//p pop出来的就是路径顺序
+	}
 
 
 };
 
 int main(){
-	Graph p(std::ifstream("c:\\t\\g.txt"));
-	std::list<AdjList>*q = p.getAdj(3);
-	
+	Graph p(std::ifstream("c:\\t\\g2.txt"));
+	BreadthFirstPaths s(p, 0);
+	std::stack<int> *ptr = s.pathTo(3);
+	while (ptr&&!ptr->empty())
+	{
+		int q = ptr->top();
+		std::cout << q << " ";
+		ptr->pop();
+
+	}
+	//std::list<AdjList>*q = p.getAdj(3);
+	/*for (std::list<AdjList>::iterator i = p.getAdj(3)->begin(); i != p.getAdj(3)->end(); i++){
+		std::cout << i->value << " ";
+	}*/
 }
