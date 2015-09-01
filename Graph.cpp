@@ -1,10 +1,10 @@
-#include <iostream>
+ï»¿#include <iostream>
 #include <fstream>
 #include <list>
 #include <stack>
 #include <queue>
 #pragma once;
-//ÁÚ½Ó±íÁ´±í½Úµã
+//é‚»æ¥è¡¨é“¾è¡¨èŠ‚ç‚¹
 struct AdjList
 {
 	AdjList(int v){
@@ -15,24 +15,24 @@ struct AdjList
 
 class Graph{
 private:
-	int v;//¶¥µãÊıÄ¿
-	int e;//±ßÊı
+	int v;//é¡¶ç‚¹æ•°ç›®
+	int e;//è¾¹æ•°
 	std::list<AdjList> * adj;
 public:
-	//³õÊ¼»¯graph
+	//åˆå§‹åŒ–graph
 	Graph(int v){
 		this->v = v;
 		e = 0;
 		adj = new std::list<AdjList>[v];
 	}
-	//¶ÁÈëÎÄ±¾ÎÄ¼şºó ³õÊ¼»¯
+	//è¯»å…¥æ–‡æœ¬æ–‡ä»¶å åˆå§‹åŒ–
 	Graph(std::ifstream &in){
 		if (!in){
 			std::cout << "can't open file";
 			exit(-1);
 		}
 		int n; in >> n;
-		new (this) Graph(n);//µ÷ÓÃ¹¹Ôìº¯Êı£¬¸²¸ÇthisÖ¸ÏòµÄÄÚ´æ
+		new (this) Graph(n);//è°ƒç”¨æ„é€ å‡½æ•°ï¼Œè¦†ç›–thisæŒ‡å‘çš„å†…å­˜
 		in >> n;
 		for (int i = 0; i < n; i++){
 			int v, w;
@@ -55,24 +55,24 @@ public:
 	}
 
 };
-//Éî¶ÈÓÅÏÈËÑË÷
+//æ·±åº¦ä¼˜å…ˆæœç´¢
 class DepthFirstSearch{
 private:
-	bool* marked;//Ò»¸öÖ¸Ïò´óĞ¡Îªgraph.v Êı×éµÄÖ¸Õë¡£
+	bool* marked;//ä¸€ä¸ªæŒ‡å‘å¤§å°ä¸ºgraph.v æ•°ç»„çš„æŒ‡é’ˆã€‚
 	int count;
 public:
-	//³õÊ¼»¯£¬´«ÈëÒ»¸ögºÍÆğÊ¼µã
+	//åˆå§‹åŒ–ï¼Œä¼ å…¥ä¸€ä¸ªgå’Œèµ·å§‹ç‚¹
 	DepthFirstSearch(Graph &g, int start){
 		marked = new bool[g.getV()];
 		memset(marked, 0, g.getV()*sizeof(bool));
 		count = 0;
 		dfs(g, start);
 	}
-	//´«ÈëÒ»¸öGºÍ½ÚµãÖµ
+	//ä¼ å…¥ä¸€ä¸ªGå’ŒèŠ‚ç‚¹å€¼
 	void dfs(Graph&g, int node){
 		marked[node] = true;
 		count++;
-		//±éÀúÁì½Ó±í£¬Ã»ÓĞ±»±ê¼ÇµÄ½Úµã¼ÌĞøµİ¹é
+		//éå†é¢†æ¥è¡¨ï¼Œæ²¡æœ‰è¢«æ ‡è®°çš„èŠ‚ç‚¹ç»§ç»­é€’å½’
 		for (std::list<AdjList>::iterator i = g.getAdj(node)->begin(); i != g.getAdj(node)->end(); i++){
 			if (!marked[i->value])dfs(g, i->value);
 		}
@@ -84,16 +84,16 @@ public:
 		return count;
 	}
 };
-//Éî¶ÈÓÅÏÈËÑË÷Â·¾¶
+//æ·±åº¦ä¼˜å…ˆæœç´¢è·¯å¾„
 class DepthFirstPaths{
 private:
-	bool* marked;//Ò»¸öÖ¸Ïò´óĞ¡Îªgraph.v Êı×éµÄÖ¸Õë¡£
-	int *edgeTo;//Êı×éË÷Òın±íÊ¾½Úµãn£¬Öµ±íÊ¾Óë¸Ã½ÚµãÁ¬½ÓµÄ½Úµã
+	bool* marked;//ä¸€ä¸ªæŒ‡å‘å¤§å°ä¸ºgraph.v æ•°ç»„çš„æŒ‡é’ˆã€‚
+	int *edgeTo;//æ•°ç»„ç´¢å¼•nè¡¨ç¤ºèŠ‚ç‚¹nï¼Œå€¼è¡¨ç¤ºä¸è¯¥èŠ‚ç‚¹è¿æ¥çš„èŠ‚ç‚¹
 	int s;
 
 	void dfs(Graph&g, int node){
 		marked[node] = true;
-		//´Ë´¦´æÒÉ  ÕâÑùÊÇ·ñÄÜ·ÃÎÊµ½Õû¸öÁ´±íÓĞ´ıÑéÖ¤
+		//æ­¤å¤„å­˜ç–‘  è¿™æ ·æ˜¯å¦èƒ½è®¿é—®åˆ°æ•´ä¸ªé“¾è¡¨æœ‰å¾…éªŒè¯
 		for (std::list<AdjList>::iterator i = g.getAdj(node)->begin(); i != g.getAdj(node)->end(); i++){
 			if (!marked[i->value]){
 				edgeTo[i->value] = node;
@@ -110,13 +110,13 @@ public:
 		s = start;
 		dfs(g, start);
 	}
-	//´«ÈëÒ»¸öGºÍ½ÚµãÖµ
+	//ä¼ å…¥ä¸€ä¸ªGå’ŒèŠ‚ç‚¹å€¼
 	
 	bool hasPathTo(int w){
 		return marked[w];
 	}
 
-	//·µ»ØÂ·¾¶Á´±í
+	//è¿”å›è·¯å¾„é“¾è¡¨
 	std::stack<int>* pathTo(int v){
 		if (!hasPathTo(v))return NULL;
 		std::stack<int> * p = new std::stack<int>;
@@ -124,16 +124,16 @@ public:
 			p->push(x);
 		}
 		p->push(s);
-		return p;//p pop³öÀ´µÄ¾ÍÊÇÂ·¾¶Ë³Ğò
+		return p;//p popå‡ºæ¥çš„å°±æ˜¯è·¯å¾„é¡ºåº
 	}
 	
 };
-//¹ã¶ÈÓÅÏÈËÑË÷
+//å¹¿åº¦ä¼˜å…ˆæœç´¢
 class BreadthFirstPaths{
 private:
-	bool *marked;//±ê¼Ç
-	int *edgeTo;//Á¬½Óµ½µÄ±ß
-	int s;//Æğµã
+	bool *marked;//æ ‡è®°
+	int *edgeTo;//è¿æ¥åˆ°çš„è¾¹
+	int s;//èµ·ç‚¹
 
 	void bfs(Graph&g, int start){
 		std::queue<int> que;
@@ -142,14 +142,14 @@ private:
 		while (!que.empty())
 		{
 			int v = que.front(); 
-			que.pop();	//»ñÈ¡¶ÓÁĞ×îÇ°ÃæµÄÒ»¸öÔªËØºóÉ¾È¥
+			que.pop();	//è·å–é˜Ÿåˆ—æœ€å‰é¢çš„ä¸€ä¸ªå…ƒç´ ååˆ å»
 			//std::cout << v<<std::endl;
 			for (std::list<AdjList>::iterator i = g.getAdj(v)->begin(); i != g.getAdj(v)->end(); i++){
 				//std::cout << i->value<<std::endl;
 				if (!marked[i->value]){
-					edgeTo[i->value] = v;//±ê¼ÇËùÓĞÏàÁÚµÄµãµÄÀ´Â·
-					marked[i->value] = true;//±ê¼ÇËùÓĞÏàÁÚµãµÄ
-					que.push(i->value);//°Ñ¸ÃµãÍÆÈë¶ÓÁĞ
+					edgeTo[i->value] = v;//æ ‡è®°æ‰€æœ‰ç›¸é‚»çš„ç‚¹çš„æ¥è·¯
+					marked[i->value] = true;//æ ‡è®°æ‰€æœ‰ç›¸é‚»ç‚¹çš„
+					que.push(i->value);//æŠŠè¯¥ç‚¹æ¨å…¥é˜Ÿåˆ—
 				}
 			}
 		}
@@ -167,7 +167,7 @@ public:
 		return marked[v];
 	}
 
-	//·µ»ØÂ·¾¶Á´±í
+	//è¿”å›è·¯å¾„é“¾è¡¨
 	std::stack<int>* pathTo(int v){
 		if (!hasPathTo(v))return NULL;
 		std::stack<int> * p = new std::stack<int>;
@@ -175,7 +175,7 @@ public:
 			p->push(x);
 		}
 		p->push(s);
-		return p;//p pop³öÀ´µÄ¾ÍÊÇÂ·¾¶Ë³Ğò
+		return p;//p popå‡ºæ¥çš„å°±æ˜¯è·¯å¾„é¡ºåº
 	}
 
 

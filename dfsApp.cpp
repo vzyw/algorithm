@@ -1,9 +1,9 @@
-#include "Graph.cpp"
-//Á¬Í¨·ÖÁ¿¼ì²â ½ÚµãaºÍ½ÚµãbÊÇ·ñÁ¬Í¨
+ï»¿#include "Graph.cpp"
+//è¿é€šåˆ†é‡æ£€æµ‹ èŠ‚ç‚¹aå’ŒèŠ‚ç‚¹bæ˜¯å¦è¿é€š
 #pragma once;
 class CC{
 	bool * marked;
-	int * connected;//Êı×é£¬Á¬Í¨µÄ½ÚµãÆäÖµ¶¼ÊÇÒ»ÑùµÄ
+	int * connected;//æ•°ç»„ï¼Œè¿é€šçš„èŠ‚ç‚¹å…¶å€¼éƒ½æ˜¯ä¸€æ ·çš„
 	int flag; 
 
 	void dfs(Graph&g,int n){
@@ -11,7 +11,7 @@ class CC{
 		marked[n] = true;
 		for (std::list<AdjList>::iterator i = g.getAdj(n)->begin(); i != g.getAdj(n)->end(); i++){
 			if (!marked[i->value])
-				dfs(g, i->value);//µİ¹é£¬Ö±µ½ËùÓĞÏàÁ¬µÄ½Úµã±»±ê¼Ç¡£
+				dfs(g, i->value);//é€’å½’ï¼Œç›´åˆ°æ‰€æœ‰ç›¸è¿çš„èŠ‚ç‚¹è¢«æ ‡è®°ã€‚
 		}
 	}
 public:
