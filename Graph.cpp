@@ -3,6 +3,7 @@
 #include <list>
 #include <stack>
 #include <queue>
+#pragma once;
 //邻接表链表节点
 struct AdjList
 {
