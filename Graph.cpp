@@ -26,7 +26,11 @@ public:
 		adj = new std::list<AdjList>[v];
 	}
 	//读入文本文件后 初始化
-	Graph(std::ifstream in){
+	Graph(std::ifstream &in){
+		if (!in){
+			std::cout << "can't open file";
+			exit(-1);
+		}
 		int n; in >> n;
 		new (this) Graph(n);//调用构造函数，覆盖this指向的内存
 		in >> n;
@@ -177,19 +181,20 @@ public:
 
 };
 
-int main(){
-	Graph p(std::ifstream("c:\\t\\g2.txt"));
-	BreadthFirstPaths s(p, 0);
-	std::stack<int> *ptr = s.pathTo(3);
-	while (ptr&&!ptr->empty())
-	{
-		int q = ptr->top();
-		std::cout << q << " ";
-		ptr->pop();
-
-	}
-	//std::list<AdjList>*q = p.getAdj(3);
-	/*for (std::list<AdjList>::iterator i = p.getAdj(3)->begin(); i != p.getAdj(3)->end(); i++){
-		std::cout << i->value << " ";
-	}*/
-}
+//int main(){
+//	std::ifstream in("c:\\t\\g2.txt");
+//	Graph p(in);
+//	BreadthFirstPaths s(p, 0);
+//	std::stack<int> *ptr = s.pathTo(3);
+//	while (ptr&&!ptr->empty())
+//	{
+//		int q = ptr->top();
+//		std::cout << q << " ";
+//		ptr->pop();
+//
+//	}
+//	//std::list<AdjList>*q = p.getAdj(3);
+//	/*for (std::list<AdjList>::iterator i = p.getAdj(3)->begin(); i != p.getAdj(3)->end(); i++){
+//		std::cout << i->value << " ";
+//	}*/
+//}
