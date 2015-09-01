@@ -2,6 +2,7 @@
 #include <fstream>
 #include <list>
 #include <stack>
+#include <queue>
 //邻接表链表
 struct AdjList
 {
@@ -49,7 +50,7 @@ public:
 	}
 
 };
-
+//深度优先搜索
 class DepthFirstSearch{
 private:
 	bool* marked;//一个指向大小为graph.v 数组的指针。
@@ -78,7 +79,7 @@ public:
 		return count;
 	}
 };
-
+//深度优先搜索路径
 class DepthFirstPaths{
 private:
 	bool* marked;//一个指向大小为graph.v 数组的指针。
@@ -87,7 +88,7 @@ private:
 
 	void dfs(Graph&g, int node){
 		marked[node] = true;
-
+		//此处存疑  这样是否能访问到整个链表有待验证
 		for (std::list<AdjList>::iterator i = g.getAdj(node)->begin(); i != g.getAdj(node)->end(); i++){
 			if (!marked[i->value]){
 				edgeTo[i->value] = node;
@@ -118,14 +119,44 @@ public:
 			p->push(x);
 		}
 		p->push(s);
-		return p;
+		return p;//p pop出来的就是路径顺序
 	}
 	
 };
-
+//广度优先搜索
 class BreadthFirstPaths{
 private:
-	bool 
+	bool *marked;//标记
+	int *edgeTo;//连接到的边
+	int s;//起点
+
+	void bfs(Graph&g, int node){
+		std::queue<int> que;
+		marked[node] = true;
+		que.push(node);
+		while (!que.empty())
+		{
+			int v = que.front();
+			que.push();
+			//std::list<AdjList> *p = g.getAdj(node);
+			//此处存疑  这样是否能访问到整个链表有待验证
+			for (std::list<AdjList>::iterator i = g.getAdj(node)->begin(); i != g.getAdj(node)->end(); i++){
+				if (!marked[*i])
+			}
+		}
+	}
+public:
+	BreadthFirstPaths(Graph&g, int start){
+		s = start;
+		marked = new bool[g.getV()];
+		edgeTo = new int[g.getV()];
+		memset(marked, 0, g.getV() - 1);
+		//memset(marked, 0, g.getV() - 1);
+		bfs(g, s);
+	}
+
+
+
 };
 
 int main(){
