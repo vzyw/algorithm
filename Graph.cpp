@@ -18,6 +18,11 @@ private:
 	int v;//顶点数目
 	int e;//边数
 	std::list<AdjList> * adj;
+	void addEdge(int v, int w){
+		adj[v].push_back(w);
+		adj[w].push_back(v);
+		e++;
+	}
 public:
 	//初始化graph
 	Graph(int v){
@@ -36,7 +41,7 @@ public:
 		in >> n;
 		for (int i = 0; i < n; i++){
 			int v, w;
-			in >> v;in >> w;
+			in >> v>> w;
 			addEdge(v, w);
 		}
 	}
@@ -44,11 +49,7 @@ public:
 	int getV(){ return v; }
 	int getE(){ return e; }
 
-	void addEdge(int v, int w){
-		adj[v].push_back(w);
-		adj[w].push_back(v);
-		e++;
-	}
+	
 
 	std::list<AdjList> * getAdj(int n){
 		return &adj[n];

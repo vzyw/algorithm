@@ -53,7 +53,7 @@ private:
 	}
 public:
 	Cycle(Graph&g){
-		hasCycle = false;
+		cycle = false;
 		marked = new bool[g.getV()];
 		for (int n = 0; n < g.getV(); n++){
 			if (!marked[n]){
@@ -98,10 +98,10 @@ public:
 	}
 
 };
-int main(){
-	
-	std::ifstream in("c:\\t\\g.txt");
-	Graph p(in);
-	CC c(p);
-	std::cout<<c.isConnected(1, 9);
-}
+//int main(){
+//	
+//	std::ifstream in("c:\\t\\g.txt");
+//	Graph p(in);
+//	CC c(p);
+//	std::cout<<c.isConnected(1, 9);
+//}

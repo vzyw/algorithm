@@ -2,8 +2,9 @@
 const int max = 20;
 class MaxPQ{
 private:
-	int arr[max];
+	int *arr;
 	int N = 0;
+
 	bool less(int i, int j){
 		return arr[i] < arr[j];
 	}
@@ -28,6 +29,9 @@ private:
 		}
 	}
 public:
+	MaxPQ(int n){
+		arr = new int[n];
+	}
 	void insert(int n){
 		arr[++N] = n;
 		swim(N);
@@ -38,25 +42,24 @@ public:
 		sink(1);
 		return max;
 	}
-	void d(){
+	/*void d(){
 		for (int i = 1; i <= N; i++){
 			std::cout << arr[i] << " ";
 		}
 		std::cout << "\n";
-	}
+	}*/
 };
-
-
-int main(){
-	MaxPQ p;
-	p.insert(10);
-	p.insert(3);
-	p.insert(11);
-	p.insert(6);
-	p.insert(8);
-	p.insert(12);
-	p.insert(9);
-	p.d();
-	p.delMax();
-	p.d();
-}
+template<class T>
+//int main(){
+//	MaxPQ p;
+//	p.insert(10);
+//	p.insert(3);
+//	p.insert(11);
+//	p.insert(6);
+//	p.insert(8);
+//	p.insert(12);
+//	p.insert(9);
+//	p.d();
+//	p.delMax();
+//	p.d();
+//}
