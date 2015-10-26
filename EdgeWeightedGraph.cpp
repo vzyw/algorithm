@@ -166,24 +166,24 @@ public:
 //};
 
 
-int main(){
-	std::ifstream in("c:\\t\\tinyEWG.txt");
-	EdgeWeightedGraph te(in);
-	LazyPrimeMST a(te);
-	std::queue<Edge> * p = a.getMST();
-	while (!p->empty()){
-		Edge a = p->front();
-		std::cout << a.either() << " " << a.other(a.either()) << "\n";
-		p->pop();
-	}
-
+//int main(){
+//	std::ifstream in("c:\\t\\tinyEWG.txt");
+//	EdgeWeightedGraph te(in);
+//	LazyPrimeMST a(te);
+//	std::queue<Edge> * p = a.getMST();
+//	while (!p->empty()){
+//		Edge a = p->front();
+//		std::cout << a.either() << " " << a.other(a.either()) << "\n";
+//		p->pop();
+//	}
+//
 
 
 	//std::list<Edge>* p = te.getEdges();
 	//for (auto i : *p){
 	//	std::cout << i.either() << " " << i.other(i.either()) << " " << i.getWeight() << "\n";
 	//}
-	std :: cout << "\n";
+	//std :: cout << "\n";
 	//stl中的优先队列，具体见笔记
 	//std::priority_queue<Edge, std::vector<Edge>, std::greater<Edge>> edge_queue;
 	//for (auto i : *p){
@@ -196,4 +196,4 @@ int main(){
 	//}
 	
 	
-}  
+//}  

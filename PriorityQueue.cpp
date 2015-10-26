@@ -49,7 +49,6 @@ public:
 		std::cout << "\n";
 	}*/
 };
-template<class T>
 //int main(){
 //	MaxPQ p;
 //	p.insert(10);
